@@ -41,21 +41,7 @@ const Cart = () => {
 		calculateTotal(updatedCart);
 	};
 
-	const handleCheckout = () => {
-		const user = JSON.parse(localStorage.getItem('user'));
-		if (!user) {
-			localStorage.setItem('redirectAfterLogin', '/cart');
-			navigate('/login');
-		} else {
-			navigate('/order');
-		}
-  	};
 
-	const handleLogout = () => {
-		logout();
-		localStorage.removeItem('cart');
-		navigate('/');
-	};
 
 	return (
 		<div className="flex flex-col h-screen bg-gray-100">
