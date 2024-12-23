@@ -15,8 +15,6 @@ const getCategoryName = (category) => {
     }
 };
 
-export { getCategoryName };
-
 const getStatusName = (status) => {
     switch (status) {
         case "waiting for confirmation":
