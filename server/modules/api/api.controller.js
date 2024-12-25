@@ -115,3 +115,73 @@ exports.updateOrderStatus = async (req, res) => {
         res.status(500).json({ message: "Lỗi server" });
     }
 };
+
+exports.getMyOrders = async (req, res) => {
+    try {
+        const customer = await CustomerEntity.findOne({ email: req.params.email });
+
+        if (!customer) {
+            return res.status(404).json({ message: 'Không tìm thấy khách hàng' });
+        }
+
+        // Sắp xếp đơn hàng theo ngày đặt hàng mới nhất
+        const sortedOrders = customer.orders.sort((a, b) => 
+            new Date(b.date_order) - new Date(a.date_order)
+        );
+
+        res.json(sortedOrders);
+    } catch (error) {
+        res.status(500).json({ message: 'Lỗi server', error: error.message });
+    }
+};
+
+exports.getCustomers = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = 5;
+        const search = req.query.search || '';
+
+        const query = {
+            $or: [
+                { username: { $regex: search, $options: 'i' } },
+                { email: { $regex: search, $options: 'i' } }
+            ]
+        };
+
+        const [totalCustomers, customers] = await Promise.all([
+            CustomerEntity.countDocuments(query),
+            CustomerEntity.find(query)
+                .skip((page - 1) * limit)
+                .limit(limit)
+        ]);
+
+        const totalPages = Math.ceil(totalCustomers / limit);
+
+        const formattedCustomers = customers.map(customer => ({
+            _id: customer._id,
+            username: customer.username,
+            email: customer.email,
+            orders: customer.orders.map(order => ({
+                ...order.toObject(),
+                total_price: order.total_price,
+                date_order: order.date_order.toISOString(),
+                payment: {
+                    ...order.payment,
+                    date_payment: order.payment.date_payment.toISOString()
+                }
+            }))
+        }));
+
+        res.json({
+            customers: formattedCustomers,
+            currentPage: page,
+            totalPages,
+        });
+    } catch (error) {
+        console.error('Error fetching customers:', error);
+        res.status(500).json({ 
+            message: 'Không thể kết nối với cơ sở dữ liệu. Vui lòng thử lại sau.',
+            error: error.message 
+        });
+    }
+};
