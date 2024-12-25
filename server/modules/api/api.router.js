@@ -16,5 +16,9 @@ router.get(`${prefixProducts}/:category`, apiController.getProductsBaseOnCategor
 router.get(`${prefixAdmin}/export/:dataType`, apiController.exportFile);
 router.get(`${prefixAdmin}/orders`, apiController.getAllOrders);
 router.patch(`${prefixAdmin}/orders/:id`, apiController.updateOrderStatus);
+router.get(`${prefixAdmin}/products`, apiController.getProductsBaseOnCurrentPage);
+router.post(`${prefixAdmin}/products`, apiController.addNewProduct);
+router.put(`${prefixAdmin}/products/:id`, apiController.updateProduct);
+router.delete(`${prefixAdmin}/products/:id`, apiController.deleteProduct);
 
 module.exports = router;

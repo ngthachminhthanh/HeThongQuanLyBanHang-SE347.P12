@@ -172,6 +172,88 @@ exports.getMyOrders = async (req, res) => {
     }
 };
 
+exports.getProductsBaseOnCurrentPage = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = 6;
+        const skip = (page - 1) * limit;
+        const search = req.query.search || '';
+
+        const query = search ? { name: { $regex: search, $options: 'i' } } : {};
+
+        const totalProducts = await ProductEntity.countDocuments(query);
+        const totalPages = Math.ceil(totalProducts / limit);
+
+        const products = await ProductEntity.find(query)
+        .skip(skip)
+        .limit(limit)
+        .sort({ name: 1 });
+
+        res.json({
+            products,
+            currentPage: page,
+            totalPages,
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+exports.updateProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedProduct = await ProductEntity.findByIdAndUpdate(id, req.body, { new: true });
+        if (!updatedProduct) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+        res.json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+exports.deleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedProduct = await ProductEntity.findByIdAndDelete(id);
+
+        if (!deletedProduct) {
+            return res.status(404).json({ message: 'Sản phẩm không tồn tại.' });
+        }
+
+        return res.status(200).json({ message: 'Xóa sản phẩm thành công.', product: deletedProduct });
+    } catch (error) {
+        console.error('Lỗi khi xóa sản phẩm:', error);
+        return res.status(500).json({ message: 'Lỗi máy chủ. Vui lòng thử lại sau.' });
+    }
+};
+
+exports.addNewProduct = async (req, res) => {
+    try {
+        const { name, image, price, quantity, category, description } = req.body;
+
+        // Validate input
+        if (!name || !image || !price || !quantity || !category || !description) {
+            return res.status(400).json({ message: 'Vui lòng điền đầy đủ thông tin sản phẩm.' });
+        }
+
+        const newProduct = new ProductEntity({
+            name,
+            image,
+            price,
+            quantity,
+            category,
+            description
+        });
+
+        const savedProduct = await newProduct.save();
+        res.status(201).json(savedProduct);
+    } catch (error) {
+        console.error('Error adding product:', error);
+        res.status(500).json({ message: 'Đã xảy ra lỗi khi thêm sản phẩm.' });
+    }
+};
+
 exports.getCustomers = async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1;
