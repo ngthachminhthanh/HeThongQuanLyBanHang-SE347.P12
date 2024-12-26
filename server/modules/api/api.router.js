@@ -7,7 +7,6 @@ const prefixAdmin = "/admin";
 // Endpoint API router for User
 
 router.post('/order', apiController.handleOrder);
-=======
 router.get(prefixProducts, apiController.getAllProducts);
 router.get(`${prefixProducts}/:category`, apiController.getProductsBaseOnCategory);
 
