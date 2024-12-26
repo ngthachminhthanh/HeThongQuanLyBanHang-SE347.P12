@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const apiController = require("./api.controller");
+const viaZalopay = require('../../modules/payment/viaZalopay');
 const prefixProducts = "/products";
 const prefixAdmin = "/admin";
 
@@ -9,6 +10,10 @@ router.post('/order', apiController.handleOrder);
 router.get(prefixProducts, apiController.getAllProducts);
 router.get(`${prefixProducts}/:category`, apiController.getProductsBaseOnCategory);
 router.get('/myorders/:email', apiController.getMyOrders);
+router.post('/payment', viaZalopay.createPayment);
+router.post('/payment2', viaZalopay.createPaymentFromMyOrder);
+router.post('/callback', viaZalopay.callBack);
+
 
 // Endpoint API router for Admin
 router.get(`${prefixAdmin}/export/:dataType`, apiController.exportFile);
