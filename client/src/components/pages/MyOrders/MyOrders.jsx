@@ -52,6 +52,8 @@ const MyOrders = () => {
 			case 'waiting for confirmation':
 				return <Clock className="w-5 h-5 text-yellow-500" />;
 			case 'shipping':
+			case 'shipping_paid':
+			case 'shipping_unpaid':
 				return <Truck className="w-5 h-5 text-blue-500" />;
 			case 'delivered':
 				return <CheckCircle2 className="w-5 h-5 text-green-500" />;
@@ -62,11 +64,61 @@ const MyOrders = () => {
 		}
 	};
 
+	const handleStatusChange = async (orderId, newStatus) => {
+
+		setOrders((prevOrders) =>
+			prevOrders.map((order) =>
+				order.orderId === orderId ? { ...order, status: newStatus } : order
+			)
+		);
+	
+		try {
+			const response = await axios.patch(`http://localhost:5000/api/admin/orders/${orderId}`, { status: newStatus });
+			if (response.status === 200) {
+				setOrders(prevOrders => 
+					prevOrders.map(order => 
+						order._id === orderId ? { ...order, status: newStatus } : order
+					)
+				);
+			}
+		} catch (error) {
+			console.error('Error updating order status:', error);
+			setError('Không thể cập nhật trạng thái đơn hàng. Vui lòng thử lại sau.');
+		}
+	};
+
 	const handleLogout = () => {
 		logout();
 		localStorage.removeItem('cart');
 		navigate('/');
 	};
+
+	const paymentInfo = async (user, order) => {
+		const info = {
+			fullname: user.username,
+			email: user.email,
+			orderId: order.orderId,
+    		items: order.item,
+			total_price: order.total_price
+		}
+		return info;
+	}
+
+	const handlePayment = async (user,order) => {
+		const info = {
+			fullname: user.username,
+			email: user.email,
+			orderId: order.orderId,
+    		items: order.products,
+			total_price: order.total_price
+		}
+		//console.log("Info--------------------------------------", info);
+		const zalopay_order = await axios.post('https://e4a7-14-169-2-6.ngrok-free.app/api/payment2', info);
+		//console.log("URL:---------------------------------------", zalopay_order.data.order_url);
+		window.location.href = zalopay_order.data.order_url;
+		handleStatusChange(order.orderId, "paid")
+	}
+
 
 	return (
 		<>
@@ -125,6 +177,7 @@ const MyOrders = () => {
 		<div className="max-w-4xl mx-auto p-4">
 			<h2 className="text-2xl font-bold mb-6">Đơn hàng của tôi</h2>
 			<div className="space-y-4">
+				
 				{orders.map((order) => (
 				<div key={order.orderId} className="border rounded-lg shadow-sm">
 					<div 
@@ -150,46 +203,80 @@ const MyOrders = () => {
 							}
 						</div>
 					</div>
-
 					{expandedOrders[order.orderId] && (
-					<div className="border-t p-4">
-						<div className="space-y-4">
-						<div className="flex justify-between text-sm">
-							<span className="font-medium">Trạng thái:</span>
-							<span className="flex items-center gap-2">
-							{getStatusIcon(order.status)}
-							{getStatusName(order.status)}
-							</span>
-						</div>
-						<div className="flex justify-between text-sm">
-							<span className="font-medium">Địa chỉ:</span>
-							<span>{order.address}</span>
-						</div>
-						<div className="flex justify-between text-sm">
-							<span className="font-medium">Phương thức thanh toán:</span>
-							<span>{order.payment.method === "Cash on Delivery" ? "Thanh toán khi nhận hàng" : order.payment.method}</span>
-						</div>
-						{order.note && (
-							<div className="flex justify-between text-sm">
-								<span className="font-medium">Ghi chú:</span>
-								<span>{order.note}</span>
-							</div>
-						)}
-						
-						<div className="mt-4">
-							<h4 className="font-medium mb-2">Sản phẩm:</h4>
-							<div className="space-y-2">
-							{order.products.map((product, index) => (
-								<div key={index} className="flex justify-between text-sm">
-									<span>{product.name} x{product.quantity}</span>
-									<span>{(product.price * product.quantity).toLocaleString('vi-VN')}đ</span>
+						<div className="border-t p-4">
+							<div className="space-y-4">
+								<div className="flex justify-between text-sm">
+									<span className="font-medium">Trạng thái:</span>
+									<span className="flex items-center gap-2">
+										{getStatusIcon(order.status)}
+										{getStatusName(order.status)}
+									</span>
 								</div>
-							))}
+								<div className="flex justify-between text-sm">
+									<span className="font-medium">Địa chỉ:</span>
+									<span>{order.address}</span>
+								</div>
+								<div className="flex justify-between text-sm">
+									<span className="font-medium">Phương thức thanh toán:</span>
+									<span>{order.payment.method === "Cash on Delivery" ? "Thanh toán khi nhận hàng" : order.payment.method}</span>
+								</div>
+								{order.note && (
+									<div className="flex justify-between text-sm">
+										<span className="font-medium">Ghi chú:</span>
+										<span>{order.note}</span>
+									</div>
+								)}
+								
+								<div className="mt-4">
+									<h4 className="font-medium mb-2">Sản phẩm:</h4>
+									<div className="space-y-2">
+										{order.products.map((product, index) => (
+											<div key={index} className="flex justify-between text-sm">
+												<span>{product.name} x{product.quantity}</span>
+												<span>{(product.price * product.quantity).toLocaleString('vi-VN')}đ</span>
+											</div>
+										))}
+									</div>
+								</div>
+
+								{/* Nút hành động */}
+								<div className="mt-4 flex gap-4">
+									{/* Nút thanh toán */}
+									{order.status === "waiting for payment"  && (
+										<button
+											onClick={() => handlePayment(user,order)}
+											className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-red-600 transition duration-300"
+										>
+											Thanh toán
+										</button>
+									)}
+					
+									{/* Nút "Hủy đơn" */}
+									{order.status === "waiting for confirmation" || order.status === "paid"  && (
+										<button
+											onClick={() => handleStatusChange(order.orderId, "cancelled")}
+											className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300"
+										>
+											Hủy đơn
+										</button>
+									)}
+
+									{/* Nút "Đã nhận hàng" */}
+									{order.status === "shipping" && (
+										<button
+											onClick={() => handleStatusChange(order.orderId, "delivered")}
+											className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
+										>
+											Đã nhận hàng
+										</button>
+									)}
+								</div>
+
 							</div>
 						</div>
-						</div>
-					</div>
 					)}
+
 				</div>
 				))}
 			</div>

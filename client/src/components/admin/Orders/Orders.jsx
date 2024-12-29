@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { User, LogOut, Home, ShoppingBag, Package, Users, ChevronDown } from "lucide-react";
-import { useAuth } from "../../auth/AuthContext";
-import OrdersManagement from "./OrdersManagement";
+import { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { User, LogOut, Home, ShoppingBag, Package, Users, ChevronDown } from 'lucide-react';
+import { useAuth } from '../../auth/AuthContext';
+import OrdersManagement from './OrdersManagement';
 
 const Orders = () => {
     const { logout } = useAuth();
@@ -12,14 +12,14 @@ const Orders = () => {
 
     const handleLogout = () => {
         logout();
-        navigate("/");
+        navigate('/');
     };
 
     const menuItems = [
-        { name: "Trang chủ", icon: Home, route: "/admin/dashboard" },
-        { name: "Đơn hàng", icon: ShoppingBag, route: "/admin/orders" },
-        { name: "Sản phẩm", icon: Package, route: "/admin/products" },
-        { name: "Khách hàng", icon: Users, route: "/admin/customers" },
+        { name: 'Trang chủ', icon: Home, route: '/admin/dashboard' },
+        { name: 'Đơn hàng', icon: ShoppingBag, route: '/admin/orders' },
+        { name: 'Sản phẩm', icon: Package, route: '/admin/products' },
+        { name: 'Khách hàng', icon: Users, route: '/admin/customers' },
     ];
 
     return (
@@ -33,10 +33,16 @@ const Orders = () => {
                 </div>
                 <nav className="mt-8">
                     {menuItems.map((item) => (
-                        <Link key={item.name} to={item.route} className={`flex items-center px-6 py-3 text-indigo-100 hover:bg-indigo-600 transition-colors duration-200 ${location.pathname === item.route ? "bg-indigo-800" : ""}`}>
+                        <Link
+                            key={item.name}
+                            to={item.route}
+                            className={`flex items-center px-6 py-3 text-indigo-100 hover:bg-indigo-600 transition-colors duration-200 ${
+                                location.pathname === item.route ? 'bg-indigo-800' : ''
+                            }`}
+                        >
                             <item.icon className="h-5 w-5 mr-3" />
                             {item.name}
-                        </Link>
+                        </Link>    
                     ))}
                 </nav>
             </div>
@@ -47,14 +53,20 @@ const Orders = () => {
                 <header className="flex justify-between items-center p-4 bg-white shadow">
                     <h1 className="text-2xl font-semibold text-gray-800">Thông tin đơn hàng</h1>
                     <div className="relative">
-                        <button onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none">
+                        <button 
+                            onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                            className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
+                        >
                             <User className="h-6 w-6 text-gray-400 mr-2" />
                             Admin
                             <ChevronDown className="w-4 h-4 ml-1" />
                         </button>
                         {isUserMenuOpen && (
                             <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-                                <button onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                                <button
+                                    onClick={handleLogout}
+                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                >
                                     <LogOut className="inline w-4 h-4 mr-2" />
                                     Đăng xuất
                                 </button>
