@@ -17,9 +17,11 @@ const Order = () => {
 	const [selectedProvinceName, setSelectedProvinceName] = useState('');
 	const [selectedDistrictName, setSelectedDistrictName] = useState('');
 	const [selectedWardName, setSelectedWardName] = useState('');
+	const [paymentMethod, setPaymentMethod] = useState('');
 	const SHIPPING_FEE = 30000;  // Phí vận chuyển cố định
   	const TAX_RATE = 0.1;      // Thuế 10%
 	const navigate = useNavigate();
+	
 	const { user, logout, isLoading } = useAuth();
 	const [cartItems, setCartItems] = useState([]);
 	const [formData, setFormData] = useState({
@@ -30,12 +32,14 @@ const Order = () => {
 		province: '',
 		district: '',
 		ward: '',
-		note: ''
+		note: '',
+		paymentMethod
 	});
 	const [submitLoading, setIsSubmitLoading] = useState(false);
 
 	const productsQuantityInCart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')).length : null;
 
+	// User
 	useEffect(() => {
 		if (!isLoading && user) {
 			setFormData(prevData => ({
@@ -57,6 +61,15 @@ const Order = () => {
 		}));
 	}, [selectedProvinceName, selectedDistrictName, selectedWardName]);
 
+	// phuong thuc thanh toan
+	useEffect(() => {
+		setFormData(prevData => ({
+			...prevData,
+			paymentMethod: paymentMethod
+		}));
+	}, [paymentMethod]);
+	
+	// Vat pham 
 	useEffect(() => {
 		// Lấy sản phẩm từ localStorage
 		const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -170,19 +183,30 @@ const Order = () => {
 			note: formData.note,
 			items: cartItems,
 			total_price: calculateTotal(),
-			date: new Date()
+			date: new Date(),
+			payment_method: formData.paymentMethod
 		};
 
 		try {
-    		setIsSubmitLoading(true);
-			await axios.post('http://localhost:5000/api/order', order);
-			navigate('/checkout', { state: { order } });
+			setIsSubmitLoading(true);
+	  
+			if (paymentMethod === 'cod') {
+			  	// Xử lý logic thanh toán COD
+				await axios.post('http://localhost:5000/api/order', order);
+			  	navigate('/checkout', { state: { order } });
+			} else if (paymentMethod === 'zalopay') {
+				const zalopay_order = await axios.post('https://e4a7-14-169-2-6.ngrok-free.app/api/payment', order);
+				//console.log(alopay_order.data.url)
+				localStorage.removeItem('cart');
+				window.location.href = zalopay_order.data.order_url;
+			}
 		} catch (error) {
 			console.error(error);
 		} finally {
 			setIsSubmitLoading(false);
 		}
 	};
+
 
 	const handleLogout = () => {
 		logout();
@@ -254,6 +278,7 @@ const Order = () => {
 						<div className="bg-white p-6 rounded-lg shadow-md">
 							<h2 className="text-xl font-semibold mb-6">Thông tin giao hàng</h2>
 							<div className="space-y-4">
+								{/*Mail*/}
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
 									<input
@@ -266,7 +291,8 @@ const Order = () => {
 									disabled
 									/>
 								</div>
-							
+
+								{/*Tên*/}
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-1">Họ tên</label>
 									<input
@@ -280,6 +306,7 @@ const Order = () => {
 									/>
 								</div>
 
+								{/*SDT*/}
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-1">Số điện thoại</label>
 									<input
@@ -293,6 +320,7 @@ const Order = () => {
 									/>
 								</div>
 
+								{/*Địa chỉ*/}
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-1">Địa chỉ</label>
 									<input
@@ -306,6 +334,7 @@ const Order = () => {
 									/>
 								</div>
 
+								{/*Tỉnh, Thành phố*/}
 								<div className="grid grid-cols-3 gap-4">
 									<div>
 										<label className="block text-sm font-medium text-gray-700 mb-1">Tỉnh thành</label>
@@ -359,6 +388,7 @@ const Order = () => {
 									</div>
 								</div>
 
+								{/*Ghi chú*/}
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-1">Ghi chú (không bắt buộc)</label>
 									<textarea
@@ -370,19 +400,30 @@ const Order = () => {
 									/>
 								</div>
 
+								{/*Hình thức thanh toán*/}	
+
 								<div className="mt-4">
 									<label className="block text-sm font-medium text-gray-700 mb-1">Phương thức thanh toán</label>
 									<input
 										type="radio"
 										name="payment"
 										value="cod"
-										className="form-radio text-purple-600 ml-3"
-										checked
-										readOnly
+										onChange={(e) => setPaymentMethod(e.target.value)}
 									/>
 									<span className="ml-2">Thanh toán khi nhận hàng</span>
+									
+									<input
+										type="radio"
+										name="payment"	
+										value="zalopay"	
+										onChange={(e) => setPaymentMethod(e.target.value)}
+									/>
+									<span className="ml-2">Thanh toán Zalopay</span>
+								
 								</div>
+								
 							</div>
+						
 						</div>
 
 						{/* Thông tin đơn hàng */}
@@ -408,6 +449,7 @@ const Order = () => {
 								</div>
 							))}
 
+							
 							<div className="border-t pt-4 mt-4">
 								<div className="flex justify-between mb-2">
 									<span className="text-gray-600">Giá trị đơn hàng</span>
@@ -453,6 +495,8 @@ const Order = () => {
 			}
 		</>
 	);
+
+	
 };
 
 export default Order;
