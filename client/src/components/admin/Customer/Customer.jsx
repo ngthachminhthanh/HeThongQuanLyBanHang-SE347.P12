@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { User, LogOut, Home, ShoppingBag, Package, Users, ChevronDown } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
-import CustomersManagement from "./CustomersManagement"
+import CustomersManagement from "./CustomerManagement"
 
 const Customers = () => {
     const { logout } = useAuth();
