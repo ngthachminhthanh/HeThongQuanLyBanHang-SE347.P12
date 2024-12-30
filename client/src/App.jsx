@@ -6,7 +6,7 @@ import Cart from "./components/pages/Cart/Cart";
 import Order from "./components/pages/Order/Order";
 import MyOrders from "./components/pages/MyOrders/MyOrders";
 import Checkout from "./components/pages/Checkout/Checkout";
-import Customers from "./components/admin/Customers/Customers";
+import Customers from "./components/admin/Customer/Customer";
 import Dashboard from "./components/admin/Dashboard/Dashboard";
 import Orders from "./components/admin/Orders/Orders";
 import Products from "./components/admin/Products/Products";
