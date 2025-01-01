@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const apiRouter = require('./modules/api/api.router.js')
+const authRouter = require('./modules/auth/auth.router');
 require('dotenv').config();
 
 // Kết nối đến MongoDB
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', apiRouter);
+app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
   res.send('TEST SERVER from NODEJS + EXPRESSJS');
