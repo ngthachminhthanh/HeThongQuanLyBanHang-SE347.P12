@@ -29,7 +29,7 @@
 
 ---
 
-## Mô tả chức năng chính
+# Mô tả chức năng chính
 ## Đối với khách hàng
 ### 1. Xác thực (Authentication)
 - Đăng ký tài khoản, đăng nhập cho người dùng.
@@ -139,13 +139,13 @@ Trong thư mục `client`, chạy lệnh:
 
 ## 5. Cấu Hình Ngrok
 
-1. Tải và cài đặt **Ngrok** từ trang chủ: [Ngrok](https://ngrok.com).
-2. Đăng ký tài khoản và thực hiện xác thực theo hướng dẫn tại https://dashboard.ngrok.com/get-started/setup/windows của Ngrok.
+1. Đăng ký tài khoản từ trang chủ: [Ngrok](https://ngrok.com).
+2. Tải và cài đặt **Ngrok**, thực hiện xác thực theo hướng dẫn tại https://dashboard.ngrok.com/get-started/setup/windows của Ngrok.
 3. Sau khi xác thực thành công, chạy lệnh sau trong terminal:
    ```bash
    ngrok http http://localhost:5000
    ```
-4. Lấy đường link trong phần có tiêu đề `Forwarding`. Ví dụ: `https://<ngrok-link>.ngrok.io`.
+4. Lấy đường link trong phần có tiêu đề `Forwarding`. Ví dụ: `https://3e5e-2402-800-6f2c-82c3-99e7-8a0a-ec7b-16d4.ngrok-free.app`.
 
 ---
 
