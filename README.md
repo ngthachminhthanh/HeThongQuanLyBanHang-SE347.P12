@@ -20,6 +20,52 @@
   | Nguyễn Đặng Thanh Huy     | 21522149  | 21522149@gm.uit.edu.vn      |
   | Lê Trung Kiên             | 21520308  | 21520308@gm.uit.edu.vn      |
 
+# Giới thiệu dự án
+
+- **Tên dự án**: Website quản lý bán hàng trực tuyến - MERN Shop
+- **Mục tiêu**:  
+  Website MERN Shop cung cấp tới người dùng nơi để mua sắm trang phục và những phụ kiện trực tuyến, an toàn với giao diện thân thiện và dễ sử dụng.  
+  Hệ thống được thiết kế dành cho người quản lý và khách hàng. Với khách hàng thì cung cấp đầy đủ các chức năng tìm kiếm, quản lý giỏ hàng, đặt hàng với các phương thức thanh toán khác nhau. Với người quản lý thì có các chức năng quản lý toàn bộ hoạt động trong website, bao gồm quản lý đơn hàng, sản phẩm và báo cáo thống kê.
+
+---
+
+# Mô tả chức năng chính
+## Đối với khách hàng
+### 1. Xác thực (Authentication)
+- Đăng ký tài khoản, đăng nhập cho người dùng.
+
+### 2. Tìm kiếm, phân loại sản phẩm
+- Tìm kiếm các sản phẩm có trong website bằng thanh nhập liệu tìm kiếm hoặc thông qua danh mục sản phẩm.
+  
+### 3. Quản lý giỏ hàng
+- Thêm mới, cập nhật và xóa sản phẩm có trong giỏ hàng.
+
+### 3. Đặt hàng
+- Điền các thông tin cá nhân để đặt hàng với địa chỉ được lựa chọn linh hoạt.
+- Thanh toán đơn hàng với các phương thức thanh toán khác nhau.
+
+### 4. Theo dõi đơn hàng
+- Theo dõi trạng thái của các đơn hàng đã đặt.
+- Có thể hủy đơn nếu có nhu cầu (đối với đơn hàng chưa thanh toán).
+
+## Đối với người quản lý
+### 1. Xác thực (Authentication)
+- Đăng nhập cho quản lý.
+
+### 2. Xuất báo cáo thống kê
+- Quản lý có thể kết xuất file theo định dạng tùy nhu cầu (hệ thống hiện hỗ trợ định dạng file .csv và .json).
+  
+### 3. Quản lý đơn hàng
+- Theo dõi tất cả đơn hàng mà khách hàng đã đặt.
+- Xác nhận và thay đổi trạng thái đơn hàng.
+
+### 4. Quản lý sản phẩm
+- Thêm sản phẩm mới/Cập nhật/Xóa thông tin của các sản phẩm trong website.
+- Tìm kiếm sản phẩm.
+
+### 4. Truy vấn thông tin khách hàng
+- Xem hoạt động và các thông tin về khách hàng đã có tài khoản tại website.
+
 ---
 
 ## 1. Clone Repository
@@ -84,7 +130,7 @@ Trong thư mục `client`, chạy lệnh:
 ## 5. Cấu Hình Ngrok
 
 1. Tải và cài đặt **Ngrok** từ trang chủ: [Ngrok](https://ngrok.com).
-2. Đăng ký tài khoản và thực hiện xác thực theo hướng dẫn trên trang chủ của Ngrok.
+2. Đăng ký tài khoản và thực hiện xác thực theo hướng dẫn tại https://dashboard.ngrok.com/get-started/setup/windows của Ngrok.
 3. Sau khi xác thực thành công, chạy lệnh sau trong terminal:
    ```bash
    ngrok http http://localhost:5000
