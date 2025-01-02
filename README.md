@@ -75,6 +75,9 @@
   <img src="https://149860134.v2.pressablecdn.com/wp-content/uploads/mongo.png" alt="SE347.P12" width="100">
 </div>
 
+---
+
+# Hướng dẫn cài đặt và chạy dự án local
 ## 1. Clone Repository
 
 1. Mở terminal và chạy lệnh sau để clone repository về máy:
