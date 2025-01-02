@@ -160,7 +160,7 @@ Trong thư mục `client`, chạy lệnh:
    - Tìm dòng 212 và thay đường link hiện có bằng link Ngrok.
 
 3. **File `server/modules/payment/viaZalopay.js`**:
-   - Tìm dòng 47 và thay đường link hiện có bằng link Ngrok.
+   - Tìm dòng 47 và 120 thay đường link hiện có bằng link Ngrok.
 
 ---
 
