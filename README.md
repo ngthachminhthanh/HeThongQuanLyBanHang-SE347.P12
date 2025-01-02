@@ -26,7 +26,7 @@
 
 1. Mở terminal và chạy lệnh sau để clone repository về máy:
    ```bash
-   git clone <URL của repository>
+   git clone https://github.com/ngthachminhthanh/HeThongQuanLyBanHang-SE347.P12.git
    ```
 2. Sau khi clone thành công, truy cập vào thư mục vừa được tải về.
 
