@@ -66,12 +66,13 @@
 ### 4. Truy vấn thông tin khách hàng
 - Xem hoạt động và các thông tin về khách hàng đã có tài khoản tại website.
 
+## Công nghệ sử dụng
 <div align="center">
-  <img src="https://pbs.twimg.com/profile_images/1785867863191932928/EpOqfO6d_400x400.png" alt="SE347.P12" width="400">
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSDKn3vA2YUbXzN0ZC3gALWJ08gJN-Drl15w&s" alt="SE347.P12" width="400">
-  <img src="https://i0.wp.com/phocode.com/wp-content/uploads/2016/09/nodejsLogo.png?fit=300%2C300&ssl=1" alt="SE347.P12" width="400">
-  <img src="https://ajeetchaulagain.com/static/7cb4af597964b0911fe71cb2f8148d64/87351/express-js.png" alt="SE347.P12" width="400">
-  <img src="https://149860134.v2.pressablecdn.com/wp-content/uploads/mongo.png" alt="SE347.P12" width="400">
+  <img src="https://pbs.twimg.com/profile_images/1785867863191932928/EpOqfO6d_400x400.png" alt="SE347.P12" width="40">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSDKn3vA2YUbXzN0ZC3gALWJ08gJN-Drl15w&s" alt="SE347.P12" width="40">
+  <img src="https://i0.wp.com/phocode.com/wp-content/uploads/2016/09/nodejsLogo.png?fit=300%2C300&ssl=1" alt="SE347.P12" width="40">
+  <img src="https://ajeetchaulagain.com/static/7cb4af597964b0911fe71cb2f8148d64/87351/express-js.png" alt="SE347.P12" width="40">
+  <img src="https://149860134.v2.pressablecdn.com/wp-content/uploads/mongo.png" alt="SE347.P12" width="40">
 </div>
 ---
 
