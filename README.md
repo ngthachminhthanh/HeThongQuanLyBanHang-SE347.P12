@@ -20,7 +20,7 @@
   | Nguyễn Đặng Thanh Huy     | 21522149  | 21522149@gm.uit.edu.vn      |
   | Lê Trung Kiên             | 21520308  | 21520308@gm.uit.edu.vn      |
 
-# Giới thiệu dự án
+### Giới thiệu dự án
 
 - **Tên dự án**: Website quản lý bán hàng trực tuyến - MERN Shop
 - **Mục tiêu**:  
@@ -29,9 +29,9 @@
 
 ---
 
-# Mô tả chức năng chính
-## Đối với khách hàng
-### 1. Xác thực (Authentication)
+### Mô tả chức năng chính
+### Đối với khách hàng
+#### 1. Xác thực (Authentication)
 - Đăng ký tài khoản, đăng nhập cho người dùng.
 
 ### 2. Tìm kiếm, phân loại sản phẩm
