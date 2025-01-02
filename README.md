@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://camo.githubusercontent.com/ba961592d9ec200f6bd6385ec152ca58bf6bbb978b118e965482429a1575b19d/68747470733a2f2f692e696d6775722e636f6d2f576d4d6e5352742e706e67" alt="SE347.P12" width="400">
 </p>
-## SE347.P12 - Công nghệ Web và ứng dụng
+<h1 align="center">SE347.P12 - Công nghệ Web và ứng dụng</h1>
 
 ### Giới thiệu môn học
 - **Tên môn học**: Công nghệ Web và ứng dụng
