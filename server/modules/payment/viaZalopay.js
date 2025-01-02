@@ -29,7 +29,7 @@ exports.createPaymentFromMyOrder  = async (req, res) => {
   }];
 
   const embed_data = {
-    redirecturl	: "http://localhost:3000/myorders"
+    redirecturl	: "http://localhost:5173/myorders"
   };
   
   const transID = Math.floor(Math.random() * 1000000);
