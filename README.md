@@ -65,13 +65,13 @@
 ## 4. Chạy Project
 
 ### 4.1 Khởi động Server
-1. Trong thư mục `server`, chạy lệnh:
+Trong thư mục `server`, chạy lệnh:
    ```bash
    npm start
    ```
 
 ### 4.2 Khởi động Client
-1. Trong thư mục `client`, chạy lệnh:
+Trong thư mục `client`, chạy lệnh:
    ```bash
    npm run dev
    ```
@@ -122,5 +122,3 @@
 - Đảm bảo mọi thư viện đã được cài đặt thành công trước khi chạy project.
 - Luôn kiểm tra file `.env` để chắc chắn rằng thông tin được cung cấp chính xác.
 - Mỗi khi đường link Ngrok thay đổi, cần cập nhật lại trong các file liên quan.
-
-Chúc bạn setup thành công!
