@@ -31,7 +31,7 @@
 
 ## 2. Cài Đặt Dependencies
 
-### Bước 1: Truy cập từng thư mục và cài đặt thư viện
+### Truy cập từng thư mục và cài đặt thư viện
 
 - Di chuyển vào thư mục `client` và chạy lệnh:
   ```bash
